@@ -2,11 +2,6 @@ import React from 'react';
 import { getFunName } from '../helpers';
 
 class StorePicker extends React.Component{
-	// constructor(){
-	// 	super();
-	// 	this.goToStore = this.goToStore.bind(this);//how do you bind a unbound method inside a component?
-	// }
-
 	//state, props and context
 
 	goToStore(event){
@@ -30,11 +25,11 @@ class StorePicker extends React.Component{
 				<button type="submit">Visit Store -></button>
 			</form>
 		)
-	}	
-}
+	}
 
-StorePicker.contextTypes={
-	router: React.PropTypes.object
+	static contextTypes={
+		router: React.PropTypes.object
+	};
 }
 
 export default StorePicker;

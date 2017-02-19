@@ -6,27 +6,11 @@ import Fish from './Fish';
 import sampleFishes from '../sample-fishes';
 import base from '../Base'; //firebase db
 
-// video 23
-
 class App extends React.Component{
-	constructor(){
-		super();
-
-		this.loadSamples = this.loadSamples.bind(this);
-		
-		this.addFish = this.addFish.bind(this); //binds the addFish 'event' to the App component		
-		this.removeFish = this.removeFish.bind(this);
-		this.updateFish = this.updateFish.bind(this);
-		
-		this.addToOrder = this.addToOrder.bind(this);
-		this.removeOrder = this.removeOrder.bind(this);
-
-		// getinitialState
-		this.state = {
-			fishes: {},
-			order: {}
-		};
-	}
+	state = {
+		fishes: {},
+		order: {}
+	};
 
 	// life cycle methods
 	componentWillMount(){
@@ -63,7 +47,7 @@ class App extends React.Component{
 	}
 
 	// specific component methods
-	addFish(fish){
+	addFish = (fish) => {
 		// update our state
 		const fishes = {...this.state.fishes};//copy existing fishes state into const fishes
 		// add in our new fish
@@ -71,9 +55,9 @@ class App extends React.Component{
 		fishes[`fish-${timestamp}`] = fish;
 		// set state
 		this.setState({ fishes: fishes});
-	}
+	};
 
-	updateFish(key, updatedFish){
+	updateFish = (key, updatedFish) => {
 		// this function fires on the onchange event in the inventory
 		// to make this method available to the internals of the inventory component
 		// you have to add it as a prop in the below on the <Inventory /> element
@@ -81,21 +65,21 @@ class App extends React.Component{
 		const fishes = {...this.state.fishes}; // copy of existing
 		fishes[key] = updatedFish; // update it
 		this.setState({fishes});
-	}
+	};
 
-	removeFish(key){
+	removeFish = (key) => {
 		const fishes = {...this.state.fishes};
 		fishes[key] = null;
 		this.setState({fishes});
-	}
-
-	loadSamples(){
+	};
+	
+	loadSamples = () => {
 		this.setState({
 			fishes: sampleFishes
-		})
-	}
+		});
+	};
 
-	addToOrder(key){
+	addToOrder = (key) => {
 		// take a copy of our state
 		const order = {...this.state.order};
 		// update or add the number of fish ordered
@@ -104,12 +88,11 @@ class App extends React.Component{
 		this.setState({order});
 	}
 
-	removeOrder(key){
+	removeOrder = (key) => {
 		const order = {...this.state.order};
 		delete order[key];	//can use delete since this is not stored in firebase	
 		this.setState({order});
 	}
-
 
 	// main component method
 	render(){
@@ -144,11 +127,11 @@ class App extends React.Component{
 					storeId={this.props.params.storeId} />
 			</div>
 		)
-	}	
-}
+	}
 
-App.propTypes = {
-	params: React.PropTypes.object.isRequired
+	static propTypes = {
+		params: React.PropTypes.object.isRequired
+	};
 }
 
 export default App;
