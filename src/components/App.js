@@ -30,16 +30,15 @@ class App extends React.Component{
 
 	// life cycle methods
 	componentWillMount(){
-		// this runs right before the <app> is rendered		
+		// this runs right before the <app> is rendered			
 		this.ref = base.syncState(`${this.props.params.storeId}/fishes`
 			,{
-				context:this,
+				context: this,
 				state: 'fishes'
 			});
-
 		// check if there is any order in localStorage
 		const localStorageRef = localStorage.getItem(`order-${this.props.params.storeId}`);
-		if(localStorage){
+		if(localStorageRef){
 			this.setState({
 				order: JSON.parse(localStorageRef)
 			})
@@ -75,6 +74,7 @@ class App extends React.Component{
 	}
 
 	updateFish(key, updatedFish){
+		// this function fires on the onchange event in the inventory
 		// to make this method available to the internals of the inventory component
 		// you have to add it as a prop in the below on the <Inventory /> element
 		// for example <Inventory updateFish={this.updateFish} />
@@ -140,10 +140,15 @@ class App extends React.Component{
 					loadSamples={this.loadSamples}
 					fishes={this.state.fishes} 
 					updateFish={this.updateFish}
-					removeFish={this.removeFish} />
+					removeFish={this.removeFish}
+					storeId={this.props.params.storeId} />
 			</div>
 		)
 	}	
+}
+
+App.propTypes = {
+	params: React.PropTypes.object.isRequired
 }
 
 export default App;
